@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-biji=`date +"%d-%m-%Y" -d "$dateFromServer"`
+biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 BURIQ () {
     curl -sS https://raw.githubusercontent.com/Afdhan/scp/main/ssh/acc > /root/tmp
     data=( `cat /root/tmp | grep -E "^### " | awk '{print $2}'` )
