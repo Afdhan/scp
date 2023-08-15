@@ -16,7 +16,7 @@ cd
 #read -rp "Masukkan domain: " -e domain
 
 # read -rp "Masukkan Subdomain Yang Dipakai Host Sekarang: " -e sub
-SUB_DOMAIN=${cat /root/domain}
+SUB_DOMAIN=$(cat /root/domain)
 NS_DOMAIN=ns-${SUB_DOMAIN}
 echo $NS_DOMAIN > /root/nsdomain
 
