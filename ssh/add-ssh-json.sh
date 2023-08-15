@@ -13,23 +13,33 @@ fi
 portsshws=`cat ~/log-install.txt | grep -w "SSH Websocket" | cut -d: -f2 | awk '{print $1}'`
 wsssl=`cat /root/log-install.txt | grep -w "SSH SSL Websocket" | cut -d: -f2 | awk '{print $1}'`
 
-if [[ !$1 ]]; then
-    read -p "Username : " Login
+if [[ $1 && $2 && $3 ]]; then
+Login=$1
+Pass=$2
+masaaktif=$3
 else
-    Login=$1
+read -p "Username : " Login
+read -p "Password : " Pass
+read -p "Expired (days): " masaaktif
 fi
 
-if [[ !$2 ]]; then
-    read -p "Password : " Pass
-else
-    Pass=$2
-fi
+# if [[ !$1 ]]; then
+#     read -p "Username : " Login
+# else
+#     Login=$1
+# fi
 
-if [[ !$3 ]]; then
-    read -p "Expired (days): " masaaktif
-else
-    masaaktif=$3
-fi
+# if [[ !$2 ]]; then
+#     read -p "Username : " Login
+# else
+#     Pass=$2
+# fi
+
+# if [[ !$3 ]]; then
+#     read -p "Expired (days): " masaaktif
+# else
+#     masaaktif=$3
+# fi
 
 IP=$(curl -sS ifconfig.me);
 # ossl=`cat /root/log-install.txt | grep -w "OpenVPN" | cut -f2 -d: | awk '{print $6}'`
@@ -85,8 +95,8 @@ cat << EOF
     }
 }
 EOF
-fi
-cat > /home/vps/public_html/json/${user}-ssh.json << END
+else
+cat > /home/vps/public_html/json/${Login}-ssh.json << END
 {
     "status": "success",
     "message": "account created successfully",
@@ -113,4 +123,5 @@ cat > /home/vps/public_html/json/${user}-ssh.json << END
 }
 END
 echo -e "SUCCESS"
+fi
 exit 0
