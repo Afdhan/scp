@@ -1,5 +1,6 @@
 #!/bin/bash
-
+apt upgrade -y
+apt update -y
 clear
 wget -O /usr/bin/acc "https://raw.githubusercontent.com/Afdhan/scp/main/menu/acc.sh" && chmod +x /usr/bin/acc
 red='\e[1;31m'
