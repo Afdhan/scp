@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport"
+		content="width=device-width,
+				initial-scale=1.0" />
+	<title>
+		NIKON PANEL - WSC PANEL
+	</title>
+	<link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Afdhan/spinner/main/assets/images/download.jpeg">
+	<style>
+		.ctn {
+			align-items: center;
+			text-align: center;
+			margin-top: 15%;
+		}
+		body {
+			padding: 25px;
+			background-color: white;
+			color: black;
+			font-size: 25px;
+		}
+		#bt  {
+			margin-top: 20px;
+			padding: 10px;
+			width:100px;
+			border-radius: 3px;
+			border: solid 1px rgb(14, 23, 151);
+			background: black;
+			color: white
+		}
+		#bt:hover {
+			padding: 10px;
+			width:100px;
+			background: rgb(105, 8, 8);
+			color: white
+		}
+		.dark-mode {
+			background-color: black;
+			color: white;
+		}
+	</style>
+</head>
+
+<body>
+<div class="ctn">
+	<h1>WORLDSSH GROUP</h1>
+	<h2>NIKON PANEL x WSC PANEL</h2>
+	<div>
+		<button class="" id="bt" onclick="darkMode()">Dark</button>
+	</div>
+	<script>
+		function darkMode() {
+			var element = document.body;
+			if(element.classList.toggle("dark-mode")){
+				document.getElementById("bt").innerHTML = "Light";
+				document.getElementById("bt").style.color = "black";
+				document.getElementById("bt").style.background = "white";
+			}else{
+				document.getElementById("bt").innerHTML = "Dark";
+				document.getElementById("bt").style.color = "white";
+				document.getElementById("bt").style.background = "black";
+			};
+		}
+	</script>
+	</div>
+
+    
+</body>
+</html>
