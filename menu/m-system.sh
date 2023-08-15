@@ -13,6 +13,7 @@ echo -e " [\e[36m•4\e[0m] Restart All Service"
 echo -e " [\e[36m•5\e[0m] Cek Bandwith"
 echo -e " [\e[36m•6\e[0m] Install TCP BBR"
 echo -e " [\e[36m•7\e[0m] DNS CHANGER"
+echo -e " [\e[36m•8\e[0m] Update Menu"
 echo -e ""
 echo -e " [\e[31m•0\e[0m] \e[31mBACK TO MENU\033[0m"
 echo -e   ""
@@ -30,6 +31,7 @@ case $opt in
 5) clear ; bw ; exit ;;
 6) clear ; m-tcp ; exit ;;
 7) clear ; m-dns ; exit ;;
+7) clear ; update ; exit ;;
 0) clear ; menu ; exit ;;
 x) exit ;;
 *) echo -e "" ; echo "Wrong Press!" ; sleep 1 ; m-system ;;
