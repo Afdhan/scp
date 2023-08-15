@@ -23,10 +23,9 @@ NC='\e[0m'
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
 LIGHT='\033[0;37m'
-# VPS Information
-#Domain
+
 domain=$(cat /etc/xray/domain)
-#Status certificate
+
 modifyTime=$(stat $HOME/.acme.sh/${domain}_ecc/${domain}.key | sed -n '7,6p' | awk '{print $2" "$3" "$4" "$5}')
 modifyTime1=$(date +%s -d "${modifyTime}")
 currentTime=$(date +%s)
@@ -87,7 +86,7 @@ echo -e "\e[1;32m RAM USED   \e[0m: $uram MB"
 echo -e "\e[1;32m RAM TOTAL  \e[0m: $tram MB"
 echo -e ""
 echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[45;1;30m               	   MENU    	              \E[0m"
+echo -e "\E[45;1;30m                MENU    	              \E[0m"
 echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e   ""
 echo -e "\e[1;36m 1 \e[0m: SSH Menu"
