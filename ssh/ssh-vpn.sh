@@ -1,4 +1,5 @@
 #!/bin/bash
+# cari apa
 apt dist-upgrade -y
 apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
@@ -74,7 +75,7 @@ apt-get remove --purge exim4 -y
 apt -y install jq
 
 #install shc
-# apt -y install shc
+apt -y install shc
 
 # install wget and curl
 apt -y install wget curl
@@ -345,7 +346,7 @@ wget -O tendang "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/tendang.s
 wget -O user-lock "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/user-lock.sh"
 wget -O user-unlock "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/user-unlock.sh"
 
-wget -O acc "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/acc.sh" && chmod +x acc
+# wget -O acc "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/acc.sh" && chmod +x acc
 wget -O add-ssh-json "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/add-ssh-json.sh" && chmod +x add-ssh-json
 wget -O add-ssws-json "https://raw.githubusercontent.com/Afdhan/scp/main/xray/add-ssws-json.sh" && chmod +x add-ssws-json
 wget -O add-tr-json "https://raw.githubusercontent.com/Afdhan/scp/main/xray/add-tr-json.sh" && chmod +x add-tr-json
@@ -364,7 +365,9 @@ wget -O m-tcp "https://raw.githubusercontent.com/Afdhan/scp/main/menu/tcp.sh"
 wget -O xp "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/xp.sh"
 # wget -O sshws "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/sshws.sh"
 wget -O m-dns "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-dns.sh"
+wget -O update "https://raw.githubusercontent.com/Afdhan/scp/main/menu/update.sh"
 
+chmod +x update
 chmod +x menu
 chmod +x m-vmess
 chmod +x m-vless
@@ -442,11 +445,11 @@ chown -R www-data:www-data /home/vps/public_html
 sleep 0.5
 echo -e "$yell[SERVICE]$NC Restart All service SSH & OVPN"
 /etc/init.d/nginx restart >/dev/null 2>&1
-# sleep 0.5
-# echo -e "[ ${green}ok${NC} ] Restarting nginx"
-# /etc/init.d/cron restart >/dev/null 2>&1
 sleep 0.5
-echo -e "[ ${green}ok${NC} ] Restarting nginx "
+echo -e "[ ${green}ok${NC} ] Restarting nginx"
+/etc/init.d/openvpn restart >/dev/null 2>&1
+sleep 0.5
+echo -e "[ ${green}ok${NC} ] Restarting cron "
 /etc/init.d/ssh restart >/dev/null 2>&1
 sleep 0.5
 echo -e "[ ${green}ok${NC} ] Restarting ssh "
@@ -464,15 +467,15 @@ sleep 0.5
 echo -e "[ ${green}ok${NC} ] Restarting vnstat "
 /etc/init.d/squid restart >/dev/null 2>&1
 
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
-# screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
+screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
 history -c
 echo "unset HISTFILE" >> /etc/profile
 
