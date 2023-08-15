@@ -6,7 +6,7 @@ mkdir -p /root/xray
 clear
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c5)
 DOMAIN=worldssh.com
-SUB_DOMAIN=wsc-${sub}.worldssh.com
+SUB_DOMAIN=${sub}-client.worldssh.com
 CF_ID=worldssh.official@gmail.com
 CF_KEY=6bae37bcfa309d3519abb741b1f96b53fb221
 set -euo pipefail
@@ -35,6 +35,12 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "X-Auth-Key: ${CF_KEY}" \
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${SUB_DOMAIN}'","content":"'${IP}'","ttl":120,"proxied":false}')
+
+RESULTS=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
+     -H "X-Auth-Email: ${CF_ID}" \
+     -H "X-Auth-Key: ${CF_KEY}" \
+     -H "Content-Type: application/json" \
+     --data '{"type":"NS","name":"'${SUB_DOMAIN}'","content":"ns-'${SUB_DOMAIN}'","ttl":120}')
 echo "Host : $SUB_DOMAIN"
 echo "IP=$SUB_DOMAIN" > /var/lib/ipvps.conf
 echo "$SUB_DOMAIN" > /root/domain
