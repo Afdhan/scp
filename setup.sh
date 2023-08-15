@@ -240,5 +240,5 @@ echo -e ""
 echo " Auto reboot in 10 Seconds "
 sleep 10
 rm -f setup.sh
-reboot
+# reboot
 
