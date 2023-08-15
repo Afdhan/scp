@@ -1,6 +1,8 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
-echo "Checking VPS"
+# echo "Checking VPS"
+sldomain=$(cat /root/nsdomain)
+slkey=$(cat /etc/slowdns/server.pub)
 clear
 cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
@@ -40,13 +42,23 @@ sqd="$(cat ~/log-install.txt | grep -w "Squid" | cut -d: -f2)"
 # OhpDB=`cat /root/log-install.txt | grep -w "OHP DBear" | cut -d: -f2 | awk '{print $1}'`
 # OhpOVPN=`cat /root/log-install.txt | grep -w "OHP OpenVPN" | cut -d: -f2 | awk '{print $1}'`
 
-sleep 1
+pkill sldns-server
+pkill sldns-client
+systemctl daemon-reload
+systemctl stop client-sldns
+systemctl stop server-sldns
+systemctl enable client-sldns
+systemctl enable server-sldns
+systemctl start client-sldns
+systemctl start server-sldns
+systemctl restart client-sldns
+systemctl restart server-sldns
 clear
 useradd -e `date -d "$masaaktif days" +"%Y-%m-%d"` -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
 PID=`ps -ef |grep -v grep | grep sshws |awk '{print $2}'`
-if [[ $1 || $2 || $3 ]]; then
+if [[ $1 && $2 && $3 ]]; then
 cat << EOF
 {
     "status": "success",
@@ -61,7 +73,12 @@ cat << EOF
         "port_ssl": "${ssl}",
         "port_ws": "${portsshws}",
         "port_wsssl": "${wsssl}",
+        "port_ns": "22, 443, 143",
+        "ns": "${sldomain}",
+        "pubkey": "${slkey}",
+        "udp_custom": "1-65350",
         "udpgw": "7100-7900",
+        "squid": "${sqd}",
         "payload_wss": "GET wss://isi_bug_disini HTTP/1.1[crlf]Host: ${domen}[crlf]Upgrade: websocket[crlf][crlf]",
         "payload_ws": "GET / HTTP/1.1[crlf]Host: $domen[crlf]Upgrade: websocket[crlf][crlf]",
         "exp": "${exp}"
@@ -83,7 +100,12 @@ cat > /home/vps/public_html/json/${user}-ssh.json << END
         "port_ssl": "${ssl}",
         "port_ws": "${portsshws}",
         "port_wsssl": "${wsssl}",
+        "port_ns": "22, 443, 143",
+        "ns": "${sldomain}",
+        "pubkey": "${slkey}",
+        "udp_custom": "1-65350",
         "udpgw": "7100-7900",
+        "squid": "${sqd}",
         "payload_wss": "GET wss://isi_bug_disini HTTP/1.1[crlf]Host: ${domen}[crlf]Upgrade: websocket[crlf][crlf]",
         "payload_ws": "GET / HTTP/1.1[crlf]Host: $domen[crlf]Upgrade: websocket[crlf][crlf]",
         "exp": "${exp}"

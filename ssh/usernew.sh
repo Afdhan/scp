@@ -2,6 +2,8 @@
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
 clear
+sldomain=$(cat /root/nsdomain)
+slkey=$(cat /etc/slowdns/server.pub)
 cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
 domen=`cat /etc/xray/domain`
@@ -25,8 +27,18 @@ sqd="$(cat ~/log-install.txt | grep -w "Squid" | cut -d: -f2)"
 # OhpSSH=`cat /root/log-install.txt | grep -w "OHP SSH" | cut -d: -f2 | awk '{print $1}'`
 # OhpDB=`cat /root/log-install.txt | grep -w "OHP DBear" | cut -d: -f2 | awk '{print $1}'`
 # OhpOVPN=`cat /root/log-install.txt | grep -w "OHP OpenVPN" | cut -d: -f2 | awk '{print $1}'`
+pkill sldns-server
+pkill sldns-client
+systemctl daemon-reload
+systemctl stop client-sldns
+systemctl stop server-sldns
+systemctl enable client-sldns
+systemctl enable server-sldns
+systemctl start client-sldns
+systemctl start server-sldns
+systemctl restart client-sldns
+systemctl restart server-sldns
 
-sleep 1
 clear
 useradd -e `date -d "$masaaktif days" +"%Y-%m-%d"` -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
@@ -48,6 +60,11 @@ echo -e "SSH WS      : $portsshws" | tee -a /etc/log-create-ssh.log
 echo -e "SSH SSL WS  : $wsssl" | tee -a /etc/log-create-ssh.log
 echo -e "SSL/TLS     :$ssl" | tee -a /etc/log-create-ssh.log
 echo -e "UDPGW       : 7100-7900" | tee -a /etc/log-create-ssh.log
+echo -e "UDP Custom  : 1-65350" | tee -a /etc/log-create-ssh.log
+echo -e "Port NS     : ALL Port (22, 443, 143)" | tee -a /etc/log-create-ssh.log
+echo -e "NameServer  : $sldomain" | tee -a /etc/log-create-ssh.log
+echo -e "PubKey      : $slkey" | tee -a /etc/log-create-ssh.log
+echo -e "Squid      : $sqd" | tee -a /etc/log-create-ssh.log
 echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-ssh.log
 echo -e "Payload WSS" | tee -a /etc/log-create-ssh.log
 echo -e "
@@ -75,6 +92,11 @@ echo -e "SSH WS      : $portsshws" | tee -a /etc/log-create-ssh.log
 echo -e "SSH SSL WS  : $wsssl" | tee -a /etc/log-create-ssh.log
 echo -e "SSL/TLS     :$ssl" | tee -a /etc/log-create-ssh.log
 echo -e "UDPGW       : 7100-7900" | tee -a /etc/log-create-ssh.log
+echo -e "UDP Custom  : 1-65350" | tee -a /etc/log-create-ssh.log
+echo -e "Port NS     : ALL Port (22, 443, 143)" | tee -a /etc/log-create-ssh.log
+echo -e "NameServer  : $sldomain" | tee -a /etc/log-create-ssh.log
+echo -e "PubKey      : $slkey" | tee -a /etc/log-create-ssh.log
+echo -e "Squid      : $sqd" | tee -a /etc/log-create-ssh.log
 echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-ssh.log
 echo -e "Payload WSS" | tee -a /etc/log-create-ssh.log
 echo -e "
