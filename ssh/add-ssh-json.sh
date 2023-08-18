@@ -1,9 +1,9 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
-# echo "Checking VPS"
 sldomain=$(cat /root/nsdomain)
 slkey=$(cat /etc/slowdns/server.pub)
 clear
+source /root/.warna.conf
 cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then
 domen=`cat /etc/xray/domain`
@@ -23,34 +23,10 @@ read -p "Password : " Pass
 read -p "Expired (days): " masaaktif
 fi
 
-# if [[ !$1 ]]; then
-#     read -p "Username : " Login
-# else
-#     Login=$1
-# fi
-
-# if [[ !$2 ]]; then
-#     read -p "Username : " Login
-# else
-#     Pass=$2
-# fi
-
-# if [[ !$3 ]]; then
-#     read -p "Expired (days): " masaaktif
-# else
-#     masaaktif=$3
-# fi
-
 IP=$(curl -sS ifconfig.me);
-# ossl=`cat /root/log-install.txt | grep -w "OpenVPN" | cut -f2 -d: | awk '{print $6}'`
 opensh=`cat /root/log-install.txt | grep -w "OpenSSH" | cut -f2 -d: | awk '{print $1}'`
 db=`cat /root/log-install.txt | grep -w "Dropbear" | cut -f2 -d: | awk '{print $1,$2}'`
 ssl="$(cat ~/log-install.txt | grep -w "Stunnel4" | cut -d: -f2)"
-sqd="$(cat ~/log-install.txt | grep -w "Squid" | cut -d: -f2)"
-
-# OhpSSH=`cat /root/log-install.txt | grep -w "OHP SSH" | cut -d: -f2 | awk '{print $1}'`
-# OhpDB=`cat /root/log-install.txt | grep -w "OHP DBear" | cut -d: -f2 | awk '{print $1}'`
-# OhpOVPN=`cat /root/log-install.txt | grep -w "OHP OpenVPN" | cut -d: -f2 | awk '{print $1}'`
 
 pkill sldns-server
 pkill sldns-client
@@ -88,7 +64,6 @@ cat << EOF
         "pubkey": "${slkey}",
         "udp_custom": "1-65350",
         "udpgw": "7100-7900",
-        "squid": "${sqd}",
         "payload_wss": "GET wss://isi_bug_disini HTTP/1.1[crlf]Host: ${domen}[crlf]Upgrade: websocket[crlf][crlf]",
         "payload_ws": "GET / HTTP/1.1[crlf]Host: $domen[crlf]Upgrade: websocket[crlf][crlf]",
         "exp": "${exp}"

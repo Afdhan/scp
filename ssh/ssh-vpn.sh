@@ -1,11 +1,10 @@
 #!/bin/bash
-# cari apa
 apt dist-upgrade -y
 apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
 apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
 acc
-# initializing var
+
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 MYIP2="s/xxxxxxxxx/$MYIP/g";
@@ -13,7 +12,6 @@ NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
 
-#detail nama perusahaan
 country=ID
 state=Indonesia
 locality=Jakarta
@@ -22,14 +20,11 @@ organizationalunit=none
 commonname=none
 email=none
 
-# simple password minimal
 curl -sS https://raw.githubusercontent.com/Afdhan/scp/main/ssh/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-# go to root
 cd
 
-# Edit file /etc/systemd/system/rc-local.service
 cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
 Description=/etc/rc.local
@@ -45,7 +40,6 @@ SysVStartPriority=99
 WantedBy=multi-user.target
 END
 
-# nano /etc/rc.local
 cat > /etc/rc.local <<-END
 #!/bin/sh -e
 # rc.local
@@ -53,35 +47,24 @@ cat > /etc/rc.local <<-END
 exit 0
 END
 
-# Ubah izin akses
 chmod +x /etc/rc.local
 
-# enable rc local
 systemctl enable rc-local
 systemctl start rc-local.service
 
-# disable ipv6
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
-#update
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
 apt-get remove --purge ufw firewalld -y
 apt-get remove --purge exim4 -y
 
-#install jq
-apt -y install jq
-
-#install shc
-apt -y install shc
-
-# install wget and curl
-apt -y install wget curl
-
-#figlet
-apt-get install figlet -y
+# apt -y install jq
+# apt -y install shc
+# apt -y install wget curl
+# apt-get install figlet -y
 apt-get install ruby -y
 apt install python -y
 apt install make -y
@@ -115,10 +98,9 @@ apt install libssl1.0-dev -y
 apt install dos2unix -y
 gem install lolcat
 
-# set time GMT +7
+
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
-# set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 
 
@@ -156,7 +138,7 @@ install_ssl(){
     fi
 }
 
-# install webserver
+
 apt -y install nginx
 cd
 rm /etc/nginx/sites-enabled/default
@@ -179,7 +161,7 @@ wget -O /home/vps/public_html/.htaccess "https://raw.githubusercontent.com/Afdha
 mkdir /home/vps/public_html/ss-ws
 mkdir /home/vps/public_html/clash-ws
 mkdir /home/vps/public_html/json
-# install badvpn
+
 cd
 wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
@@ -202,7 +184,6 @@ screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
 screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
 
-# setting port ssh
 cd
 sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 500' /etc/ssh/sshd_config
@@ -215,8 +196,7 @@ sed -i '/Port 22/a Port 200' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 22' /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 
-echo "=== Install Dropbear ==="
-# install dropbear
+
 apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
@@ -227,7 +207,6 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
 cd
-# install stunnel
 apt install stunnel4 -y
 cat > /etc/stunnel/stunnel.conf <<-END
 cert = /etc/stunnel/stunnel.pem
@@ -260,17 +239,13 @@ openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
 -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
-# konfigurasi stunnel4
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 /lib/systemd/systemd-sysv-install enable stunnel4
 systemctl start stunnel4
 /etc/init.d/stunnel4 restart
 
-
-# install fail2ban
 apt -y install fail2ban
 
-# Instal DDOS Flate
 if [ -d '/usr/local/ddos' ]; then
 	echo; echo; echo "Please un-install the previous version first"
 	exit 0
@@ -297,12 +272,11 @@ echo; echo 'Installation has completed.'
 echo 'Config file is at /usr/local/ddos/ddos.conf'
 echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 
-# // banner /etc/issue.net
+
 wget -O /etc/issue.net "https://raw.githubusercontent.com/Afdhan/scp/main/banner/banner.conf"
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
-# blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
 iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
@@ -319,9 +293,7 @@ iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
 
-# download script
 cd /usr/bin
-# menu
 wget -O menu "https://raw.githubusercontent.com/Afdhan/scp/main/menu/menu.sh"
 wget -O m-vmess "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-vmess.sh"
 wget -O m-vless "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-vless.sh"
@@ -330,7 +302,6 @@ wget -O clearcache "https://raw.githubusercontent.com/Afdhan/scp/main/menu/clear
 wget -O m-ssws "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-ssws.sh"
 wget -O m-trojan "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-trojan.sh"
 
-# menu ssh ovpn
 wget -O m-sshovpn "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-sshovpn.sh"
 wget -O usernew "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/usernew.sh"
 wget -O trial "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/trial.sh"
@@ -342,17 +313,15 @@ wget -O delete "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/delete.sh"
 wget -O autokill "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/autokill.sh"
 wget -O ceklim "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/ceklim.sh"
 wget -O tendang "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/tendang.sh"
-# wget -O sshws "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/sshws.sh"
 wget -O user-lock "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/user-lock.sh"
 wget -O user-unlock "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/user-unlock.sh"
 
-# wget -O acc "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/acc.sh" && chmod +x acc
 wget -O add-ssh-json "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/add-ssh-json.sh" && chmod +x add-ssh-json
 wget -O add-ssws-json "https://raw.githubusercontent.com/Afdhan/scp/main/xray/add-ssws-json.sh" && chmod +x add-ssws-json
 wget -O add-tr-json "https://raw.githubusercontent.com/Afdhan/scp/main/xray/add-tr-json.sh" && chmod +x add-tr-json
 wget -O add-vless-json "https://raw.githubusercontent.com/Afdhan/scp/main/xray/add-vless-json.sh" && chmod +x add-vless-json
 wget -O add-ws-json "https://raw.githubusercontent.com/Afdhan/scp/main/xray/add-ws-json.sh" && chmod +x add-ws-json
-# menu system
+
 wget -O m-system "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-system.sh"
 wget -O m-domain "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-domain.sh"
 wget -O add-host "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/add-host.sh"
@@ -363,7 +332,6 @@ wget -O restart "https://raw.githubusercontent.com/Afdhan/scp/main/menu/restart.
 wget -O bw "https://raw.githubusercontent.com/Afdhan/scp/main/menu/bw.sh"
 wget -O m-tcp "https://raw.githubusercontent.com/Afdhan/scp/main/menu/tcp.sh"
 wget -O xp "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/xp.sh"
-# wget -O sshws "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/sshws.sh"
 wget -O m-dns "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-dns.sh"
 wget -O update "https://raw.githubusercontent.com/Afdhan/scp/main/menu/update.sh"
 
@@ -387,7 +355,6 @@ chmod +x delete
 chmod +x autokill
 chmod +x ceklim
 chmod +x tendang
-# chmod +x sshws
 chmod +x user-lock
 chmod +x user-unlock
 
@@ -401,7 +368,6 @@ chmod +x restart
 chmod +x bw
 chmod +x m-tcp
 chmod +x xp
-# chmod +x sshws
 chmod +x m-dns
 cd
 
@@ -425,7 +391,6 @@ END
 service cron restart >/dev/null 2>&1
 service cron reload >/dev/null 2>&1
 
-# remove unnecessary files
 sleep 0.5
 echo -e "[ ${green}INFO$NC ] Clearing trash"
 apt autoclean -y >/dev/null 2>&1
@@ -439,7 +404,6 @@ apt-get -y --purge remove apache2* >/dev/null 2>&1
 apt-get -y --purge remove bind9* >/dev/null 2>&1
 apt-get -y remove sendmail* >/dev/null 2>&1
 apt autoremove -y >/dev/null 2>&1
-# finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
 sleep 0.5
@@ -485,5 +449,4 @@ rm -f /root/cert.pem
 rm -f /root/ssh-vpn.sh
 rm -f /root/bbr.sh
 
-# finihsing
 clear
