@@ -1,28 +1,17 @@
 #!/bin/bash
-# ==========================================
-# Color
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHT='\033[0;37m'
-# ==========================================
-# Getting
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
+source /root/.warna.conf
 clear
 echo -n > /tmp/other.txt
 data=( `cat /etc/xray/config.json | grep '^#&#' | cut -d ' ' -f 2`);
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
-echo -e "\E[45;1;30m               TROJAN LOGIN               \E[0m";
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
+echo -e "${LIGHT}               TROJAN LOGIN               ${NCT}";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
-akun="tidakada"
+akun="Not Found"
 fi
 echo -n > /tmp/iptrojan.txt
 data2=( `netstat -anp | grep ESTABLISHED | grep tcp6 | grep xray | awk '{print $5}' | cut -d: -f1 | sort | uniq`);
@@ -42,16 +31,16 @@ if [[ -z "$jum" ]]; then
 echo > /dev/null
 else
 jum2=$(cat /tmp/iptrojan.txt | nl)
-echo "user : $akun";
+echo "User : $akun";
 echo "$jum2";
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}"
 fi
 rm -rf /tmp/iptrojan.txt
 done
 oth=$(cat /tmp/other.txt | sort | uniq | nl)
-echo "other";
+echo "Other :";
 echo "$oth";
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}"
 echo ""
 rm -rf /tmp/other.txt
 read -n 1 -s -r -p "Press any key to back on menu"

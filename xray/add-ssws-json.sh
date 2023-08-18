@@ -1,24 +1,6 @@
 #!/bin/bash
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHT='\033[0;37m'
-
-
+source /root/.warna.conf
 MYIP=$(wget -qO- ipv4.icanhazip.com);
-echo "Checking VPS"
-IZIN=$( curl ipv4.icanhazip.com | grep $MYIP )
-if [ $MYIP = $MYIP ]; then
-echo -e "${NC}${GREEN}Permission Accepted...${NC}"
-else
-echo -e "${NC}${RED}Permission Denied!${NC}";
-exit 0
-fi
-
 clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -27,11 +9,11 @@ else
 domain=$IP
 fi
 
-tls="$(cat ~/log-install.txt | grep -w "Shadowsocks WS TLS" | cut -d: -f2|sed 's/ //g')"
-ntls="$(cat ~/log-install.txt | grep -w "Shadowsocks WS none TLS" | cut -d: -f2|sed 's/ //g')"
+tls="$(cat ~/log-install.txt | grep -w "Shadowsocks WS TLS" | cut -d: -f2| sed 's/ //g')"
+ntls="$(cat ~/log-install.txt | grep -w "Shadowsocks WS none TLS" | cut -d: -f2| sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 
-    if [[ !$1 ]]; then
+    if [[ !$1 && !$2 ]]; then
 		read -rp "User: " -e user
     else
     user=$1
@@ -54,7 +36,7 @@ END
 
 cipher="aes-128-gcm"
 uuid=$(cat /proc/sys/kernel/random/uuid)
-if [[ !$2 ]]; then
+if [[ !$1 && !$2 ]]; then
 read -p "Expired (days): " masaaktif
 else
 masaaktif=$2
@@ -292,7 +274,7 @@ END
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-if [[ $1 || $2 ]]; then
+if [[ $1 && $2 ]]; then
 cat << EOF
 {
     "status": "success",

@@ -1,6 +1,6 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
-echo "Checking VPS"
+source /root/.warna.conf
 clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -12,7 +12,7 @@ tls="$(cat ~/log-install.txt | grep -w "Trojan WS TLS" | cut -d: -f2|sed 's/ //g
 ntls="$(cat ~/log-install.txt | grep -w "Trojan WS none TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 
-		if [[ !$1 ]]; then
+		if [[ !$1 && !$2 ]]; then
 		read -rp "User: " -e user
         else
         user=$1
@@ -34,7 +34,7 @@ END
 	done
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-if [[ !$2 ]]; then
+if [[ !$1 && !$2 ]]; then
 read -p "Expired (days): " masaaktif
 else
 masaaktif=$2
@@ -50,7 +50,7 @@ trojanlink="trojan://${uuid}@isi_bug_disini:${tls}?path=%2Ftrojan-ws&security=tl
 trojanlink2="trojan://${uuid}@isi_bug_disini:${ntls}?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}"
 systemctl restart xray
 clear
-if [[ $1 || $2 ]]; then
+if [[ $1 && $2 ]]; then
 cat << EOF
 {
     "status": "success",

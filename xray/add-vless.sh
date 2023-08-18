@@ -1,6 +1,7 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
+source /root/.warna.conf
 clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -37,9 +38,9 @@ vlesslink2="vless://${uuid}@${domain}:$none?path=/vless&encryption=none&type=ws#
 vlesslink3="vless://${uuid}@${domain}:$tls?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 systemctl restart xray
 clear
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vless.log
-echo -e "\E[45;1;30m                   VLESS                  \E[0m" | tee -a /etc/log-create-vless.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vless.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vless.log
+echo -e "${LIGHT}                   VLESS                  ${NCT}" | tee -a /etc/log-create-vless.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vless.log
 echo -e "Remarks        : ${user}" | tee -a /etc/log-create-vless.log
 echo -e "Domain         : ${domain}" | tee -a /etc/log-create-vless.log
 echo -e "Wildcard       : (bug.com).${domain}" | tee -a /etc/log-create-vless.log
@@ -50,15 +51,15 @@ echo -e "Encryption     : none" | tee -a /etc/log-create-vless.log
 echo -e "Network        : ws" | tee -a /etc/log-create-vless.log
 echo -e "Path           : /vless" | tee -a /etc/log-create-vless.log
 echo -e "Path           : vless-grpc" | tee -a /etc/log-create-vless.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vless.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vless.log
 echo -e "Link TLS       : ${vlesslink1}" | tee -a /etc/log-create-vless.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vless.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vless.log
 echo -e "Link none TLS  : ${vlesslink2}" | tee -a /etc/log-create-vless.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vless.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vless.log
 echo -e "Link gRPC      : ${vlesslink3}" | tee -a /etc/log-create-vless.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vless.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vless.log
 echo -e "Expired On     : $exp" | tee -a /etc/log-create-vless.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vless.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vless.log
 echo "" | tee -a /etc/log-create-vless.log
 read -n 1 -s -r -p "Press any key to back on menu"
 

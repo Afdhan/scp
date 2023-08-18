@@ -6,11 +6,6 @@ echo -e "
 "
 date
 echo ""
-kntl=$(cat /etc/xray/domain)
-echo "$kntl" > /root/domain
-domain=$(cat /root/domain)
-sleep 0.5
-
 apt clean all && apt update
 apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
 apt install socat cron bash-completion ntpdate -y
@@ -18,6 +13,11 @@ ntpdate pool.ntp.org
 apt -y install chrony
 apt install zip -y
 apt install curl pwgen openssl netcat cron -y
+
+kntl=$(cat /etc/xray/domain)
+echo "$kntl" > /root/domain
+domain=$(cat /root/domain)
+sleep 0.5
 mkdir -p /etc/xray 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y

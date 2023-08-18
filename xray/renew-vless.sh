@@ -1,31 +1,32 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
+source /root/.warna.conf
 clear
 NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		clear
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
-echo -e "\E[45;1;30m                RENEW VLESS               \E[0m";
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
+echo -e "${LIGHT}                RENEW VLESS               ${NCT}";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
 		echo ""
 		echo "You have no existing clients!"
 		echo ""
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
         echo ""
         read -n 1 -s -r -p "Press any key to back on menu"
         m-vless
 	fi
 
 	clear
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
-echo -e "\E[45;1;30m                RENEW VLESS               \E[0m";
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
+echo -e "${LIGHT}                RENEW VLESS               ${NCT}";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
     echo ""
   	grep -E "^#& " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
     echo ""
     red "tap enter to go back"
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
 	read -rp "Input Username : " user
     if [ -z $user ]; then
     m-vless
@@ -41,15 +42,15 @@ echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━�
     sed -i "/#& $user/c\#& $user $exp4" /etc/xray/config.json
     systemctl restart xray > /dev/null 2>&1
     clear
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
-echo -e "\E[45;1;30m                RENEW VLESS               \E[0m";
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
+echo -e "${LIGHT}                RENEW VLESS               ${NCT}";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
 echo "Success renew vless"
     echo ""
     echo " Client Name : $user"
     echo " Expired On  : $exp4"
     echo ""
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m";
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
     echo ""
     read -n 1 -s -r -p "Press any key to back on menu"
     m-vless

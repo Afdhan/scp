@@ -1,17 +1,7 @@
 #!/bin/bash
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHT='\033[0;37m'
-
-
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
-
+source /root/.warna.conf
 clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -116,7 +106,7 @@ cat > /home/vps/public_html/ss-$user.txt <<-END
         "security": "tls",
         "tlsSettings": {
           "allowInsecure": true,
-          "serverName": "isi_bug_disini"
+          "serverName": "your_host"
         },
         "wsSettings": {
           "headers": {
@@ -229,7 +219,7 @@ cat > /home/vps/public_html/ss-$user.txt <<-END
         "security": "tls",
         "tlsSettings": {
           "allowInsecure": true,
-          "serverName": "isi_bug_disini"
+          "serverName": "your_host"
         }
       },
       "tag": "proxy"
@@ -273,12 +263,12 @@ END
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-shadowsocks.log
-echo -e "\E[45;1;30m                SHADOWSOCKS               \E[0m" | tee -a /etc/log-create-shadowsocks.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${LIGHT}                SHADOWSOCKS               ${NCT}" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Remarks        : ${user}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Domain         : ${domain}" | tee -a /etc/log-create-shadowsocks.log
-echo -e "Wildcard       : (bug-host.com).${domain}" | tee -a /etc/log-create-shadowsocks.log
+echo -e "Wildcard       : (your_host.com).${domain}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Port TLS       : ${tls}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Port none TLS  : ${ntls}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-shadowsocks.log
@@ -287,15 +277,15 @@ echo -e "Ciphers        : ${cipher}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Network        : ws/grpc" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Path           : /ss-ws" | tee -a /etc/log-create-shadowsocks.log
 echo -e "ServiceName    : ss-grpc" | tee -a /etc/log-create-shadowsocks.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Link TLS       : ${shadowsockslink}" | tee -a /etc/log-create-shadowsocks.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Link none TLS  : ${shadowsockslink1}" | tee -a /etc/log-create-shadowsocks.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Link gRPC      : ${shadowsockslink2}" | tee -a /etc/log-create-shadowsocks.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-shadowsocks.log
 echo -e "Expired On     : $exp" | tee -a /etc/log-create-shadowsocks.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-shadowsocks.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-shadowsocks.log
 echo "" | tee -a /etc/log-create-shadowsocks.log
 read -n 1 -s -r -p "Press any key to back on menu"
 m-ssws

@@ -1,6 +1,6 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
-echo "Checking VPS"
+source /root/.warna.conf
 clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -12,7 +12,7 @@ tls="$(cat ~/log-install.txt | grep -w "VLess WS TLS" | cut -d: -f2|sed 's/ //g'
 none="$(cat ~/log-install.txt | grep -w "VLess WS none TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 
-		if [[ !$1 ]]; then
+		if [[ !$1 && !$2 ]]; then
 		read -rp "User: " -e user
         else
         user=$1
@@ -34,7 +34,7 @@ END
 	done
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-if [[ !$2 ]]; then
+if [[ !$1 && !$2 ]]; then
 read -p "Expired (days): " masaaktif
 else
 masaaktif=$2
@@ -49,7 +49,7 @@ vlesslink2="vless://${uuid}@${domain}:$none?path=/vless&encryption=none&type=ws#
 vlesslink3="vless://${uuid}@${domain}:$tls?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 systemctl restart xray
 clear
-if [[ $1 || $2 ]]; then
+if [[ $1 && $2 ]]; then
 cat << EOF
 {
     "status": "success",

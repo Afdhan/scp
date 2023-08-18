@@ -1,18 +1,12 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
-echo "Checking VPS"
+source /root/.warna.conf
 clear
-source /var/lib/ipvps.conf
-if [[ "$IP" = "" ]]; then
-domain=$(cat /etc/xray/domain)
-else
-domain=$IP
-fi
 
 tls="$(cat ~/log-install.txt | grep -w "VMess WS TLS" | cut -d: -f2|sed 's/ //g')"
 none="$(cat ~/log-install.txt | grep -w "VMess WS none TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		if [[ !$1 ]]; then
+		if [[ !$1 && !$2 ]]; then
 		read -rp "User: " -e user
         else
         user=$1
@@ -34,7 +28,7 @@ END
 	done
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-if [[ !$2 ]]; then
+if [[ !$1 && !$2 ]]; then
 read -p "Expired (days): " masaaktif
 else
 masaaktif=$2
@@ -99,7 +93,7 @@ vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-if [[ $1 || $2 ]]; then
+if [[ $1 && $2 ]]; then
 cat << EOF
 {
     "status": "success",

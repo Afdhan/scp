@@ -1,6 +1,7 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
+source /root/.warna.conf
 clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -87,9 +88,9 @@ vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vmess.log
-echo -e "\E[45;1;30m                   VMESS                  \E[0m" | tee -a /etc/log-create-vmess.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vmess.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vmess.log
+echo -e "${LIGHT}                   VMESS                  ${NCT}" | tee -a /etc/log-create-vmess.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vmess.log
 echo -e "Remarks        : ${user}" | tee -a /etc/log-create-vmess.log
 echo -e "Domain         : ${domain}" | tee -a /etc/log-create-vmess.log
 echo -e "Wildcard       : (bug.com).${domain}" | tee -a /etc/log-create-vmess.log
@@ -102,15 +103,15 @@ echo -e "Security       : auto" | tee -a /etc/log-create-vmess.log
 echo -e "Network        : ws" | tee -a /etc/log-create-vmess.log
 echo -e "Path           : /vmess" | tee -a /etc/log-create-vmess.log
 echo -e "ServiceName    : vmess-grpc" | tee -a /etc/log-create-vmess.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vmess.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vmess.log
 echo -e "Link TLS       : ${vmesslink1}" | tee -a /etc/log-create-vmess.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vmess.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vmess.log
 echo -e "Link none TLS  : ${vmesslink2}" | tee -a /etc/log-create-vmess.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vmess.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vmess.log
 echo -e "Link gRPC      : ${vmesslink3}" | tee -a /etc/log-create-vmess.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vmess.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vmess.log
 echo -e "Expired On     : $exp" | tee -a /etc/log-create-vmess.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-vmess.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-vmess.log
 echo "" | tee -a /etc/log-create-vmess.log
 read -n 1 -s -r -p "Press any key to back on menu"
 

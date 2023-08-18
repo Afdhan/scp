@@ -1,6 +1,7 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
+source /root/.warna.conf
 clear
 cekray=`cat /root/log-install.txt | grep -ow "XRAY" | sort | uniq`
 if [ "$cekray" = "XRAY" ]; then

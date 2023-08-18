@@ -1,6 +1,7 @@
 #!/bin/bash
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 acc
+source /root/.warna.conf
 clear
 source /var/lib/ipvps.conf
 if [[ "$IP" = "" ]]; then
@@ -38,27 +39,27 @@ trojanlink="trojan://${uuid}@isi_bug_disini:${tls}?path=%2Ftrojan-ws&security=tl
 trojanlink2="trojan://${uuid}@isi_bug_disini:${ntls}?path=%2Ftrojan-ws&security=none&host=${domain}&type=ws#${user}"
 systemctl restart xray
 clear
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-trojan.log
-echo -e "\E[45;1;30m                  TROJAN                  \E[0m" | tee -a /etc/log-create-trojan.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-trojan.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-trojan.log
+echo -e "${LIGHT}                  TROJAN                  ${NCT}" | tee -a /etc/log-create-trojan.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-trojan.log
 echo -e "Remarks        : ${user}" | tee -a /etc/log-create-trojan.log
 echo -e "Host/IP        : ${domain}" | tee -a /etc/log-create-trojan.log
-echo -e "Wildcard       : (bug.com).${domain}" | tee -a /etc/log-create-trojan.log
+echo -e "Wildcard       : (your_host.com).${domain}" | tee -a /etc/log-create-trojan.log
 echo -e "Port TLS       : ${tls}" | tee -a /etc/log-create-trojan.log
 echo -e "Port none TLS  : ${ntls}" | tee -a /etc/log-create-trojan.log
 echo -e "Port gRPC      : ${tls}" | tee -a /etc/log-create-trojan.log
 echo -e "Key            : ${uuid}" | tee -a /etc/log-create-trojan.log
 echo -e "Path           : /trojan-ws" | tee -a /etc/log-create-trojan.log
 echo -e "ServiceName    : trojan-grpc" | tee -a /etc/log-create-trojan.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-trojan.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-trojan.log
 echo -e "Link TLS       : ${trojanlink}" | tee -a /etc/log-create-trojan.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-trojan.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-trojan.log
 echo -e "Link none TLS  : ${trojanlink2}" | tee -a /etc/log-create-trojan.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-trojan.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-trojan.log
 echo -e "Link gRPC      : ${trojanlink1}" | tee -a /etc/log-create-trojan.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-trojan.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-trojan.log
 echo -e "Expired On     : $exp" | tee -a /etc/log-create-trojan.log
-echo -e "\033[0;35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" | tee -a /etc/log-create-trojan.log
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}" | tee -a /etc/log-create-trojan.log
 echo "" | tee -a /etc/log-create-trojan.log
 read -n 1 -s -r -p "Press any key to back on menu"
 m-trojan
