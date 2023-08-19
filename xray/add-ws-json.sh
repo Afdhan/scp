@@ -2,7 +2,12 @@
 MYIP=$(wget -qO- ipv4.icanhazip.com);
 source /root/.warna.conf
 clear
-
+source /var/lib/ipvps.conf
+if [[ "$IP" = "" ]]; then
+domain=$(cat /etc/xray/domain)
+else
+domain=$IP
+fi
 tls="$(cat ~/log-install.txt | grep -w "VMess WS TLS" | cut -d: -f2|sed 's/ //g')"
 none="$(cat ~/log-install.txt | grep -w "VMess WS none TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
