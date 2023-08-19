@@ -12,10 +12,16 @@ tls="$(cat ~/log-install.txt | grep -w "VLess WS TLS" | cut -d: -f2|sed 's/ //g'
 none="$(cat ~/log-install.txt | grep -w "VLess WS none TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 
-		if [[ !$1 && !$2 ]]; then
+		if [[ $# -gt 0 ]]; then
+        while getopts u:v: flag
+        do
+            case "${flag}" in
+                u) user=${OPTARG};;
+                v) masaaktif=${OPTARG};;
+            esac
+        done
+        else 
 		read -rp "User: " -e user
-        else
-        user=$1
         fi
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
@@ -34,10 +40,10 @@ END
 	done
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-if [[ !$1 && !$2 ]]; then
-read -p "Expired (days): " masaaktif
-else
-masaaktif=$2
+# if [[ !$1 && !$2 ]]; then
+# read -p "Expired (days): " masaaktif
+# else
+# masaaktif=$2
 fi
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#& '"$user $exp"'\
@@ -49,28 +55,28 @@ vlesslink2="vless://${uuid}@${domain}:$none?path=/vless&encryption=none&type=ws#
 vlesslink3="vless://${uuid}@${domain}:$tls?mode=gun&security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=bug.com#${user}"
 systemctl restart xray
 clear
-if [[ $1 && $2 ]]; then
-cat << EOF
-{
-    "status": "success",
-    "message": "account created successfully",
-    "data": {
-        "username": "${user}",
-        "hostname": "${domain}",
-        "port_tls": "${tls}",
-        "port_ntls": "${none}",
-        "port_grpc": "${tls}",
-        "uuid": "${uuid}",
-        "path": "/vless",
-        "servicename": "vless-grpc",
-        "link_tls": "${vlesslink1}",
-        "link_ntls": "${vlesslink2}",
-        "link_grpc": "${vlesslink3}",
-        "exp": "${exp}"
-    }
-}
-EOF
-else
+# if [[ $1 && $2 ]]; then
+# cat << EOF
+# {
+#     "status": "success",
+#     "message": "account created successfully",
+#     "data": {
+#         "username": "${user}",
+#         "hostname": "${domain}",
+#         "port_tls": "${tls}",
+#         "port_ntls": "${none}",
+#         "port_grpc": "${tls}",
+#         "uuid": "${uuid}",
+#         "path": "/vless",
+#         "servicename": "vless-grpc",
+#         "link_tls": "${vlesslink1}",
+#         "link_ntls": "${vlesslink2}",
+#         "link_grpc": "${vlesslink3}",
+#         "exp": "${exp}"
+#     }
+# }
+# EOF
+# else
 cat > /home/vps/public_html/json/${user}-vless.json << END
 {
     "status": "success",

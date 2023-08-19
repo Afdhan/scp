@@ -6,10 +6,16 @@ clear
 tls="$(cat ~/log-install.txt | grep -w "VMess WS TLS" | cut -d: -f2|sed 's/ //g')"
 none="$(cat ~/log-install.txt | grep -w "VMess WS none TLS" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		if [[ !$1 && !$2 ]]; then
-		read -rp "User: " -e user
-        else
-        user=$1
+		if [[ $# -gt 0 ]]; then
+        while getopts u:v: flag
+        do
+            case "${flag}" in
+                u) user=${OPTARG};;
+                v) masaaktif=${OPTARG};;
+            esac
+        done
+        else 
+            read -rp "User: " -e user
         fi
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
@@ -28,11 +34,11 @@ END
 	done
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
-if [[ !$1 && !$2 ]]; then
-read -p "Expired (days): " masaaktif
-else
-masaaktif=$2
-fi
+# if [[ !$1 && !$2 ]]; then
+# read -p "Expired (days): " masaaktif
+# else
+# masaaktif=$2
+# fi
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\### '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
@@ -93,28 +99,28 @@ vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-if [[ $1 && $2 ]]; then
-cat << EOF
-{
-    "status": "success",
-    "message": "account created successfully",
-    "data": {
-        "username": "${user}",
-        "hostname": "${domain}",
-        "port_tls": "${tls}",
-        "port_ntls": "${none}",
-        "port_grpc": "${tls}",
-        "uuid": "${uuid}",
-        "path": "/vmess",
-        "servicename": "vmess-grpc",
-        "link_tls": "${vmesslink1}",
-        "link_ntls": "${vmesslink2}",
-        "link_grpc": "${vmesslink3}",
-        "exp": "${exp}"
-    }
-}
-EOF
-fi
+# if [[ $1 && $2 ]]; then
+# cat << EOF
+# {
+#     "status": "success",
+#     "message": "account created successfully",
+#     "data": {
+#         "username": "${user}",
+#         "hostname": "${domain}",
+#         "port_tls": "${tls}",
+#         "port_ntls": "${none}",
+#         "port_grpc": "${tls}",
+#         "uuid": "${uuid}",
+#         "path": "/vmess",
+#         "servicename": "vmess-grpc",
+#         "link_tls": "${vmesslink1}",
+#         "link_ntls": "${vmesslink2}",
+#         "link_grpc": "${vmesslink3}",
+#         "exp": "${exp}"
+#     }
+# }
+# EOF
+# fi
 cat > /home/vps/public_html/json/${user}-vmess.json << END
 {
     "status": "success",

@@ -12,11 +12,16 @@ fi
 tls="$(cat ~/log-install.txt | grep -w "Shadowsocks WS TLS" | cut -d: -f2| sed 's/ //g')"
 ntls="$(cat ~/log-install.txt | grep -w "Shadowsocks WS none TLS" | cut -d: -f2| sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-
-    if [[ !$1 && !$2 ]]; then
+    if [[ $# -gt 0 ]]; then
+    while getopts u:v: flag
+    do
+        case "${flag}" in
+            u) user=${OPTARG};;
+            v) masaaktif=${OPTARG};;
+        esac
+    done
+    else 
 		read -rp "User: " -e user
-    else
-    user=$1
     fi
 		CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
 
@@ -36,11 +41,11 @@ END
 
 cipher="aes-128-gcm"
 uuid=$(cat /proc/sys/kernel/random/uuid)
-if [[ !$1 && !$2 ]]; then
-read -p "Expired (days): " masaaktif
-else
-masaaktif=$2
-fi
+# if [[ !$1 && !$2 ]]; then
+# read -p "Expired (days): " masaaktif
+# else
+# masaaktif=$2
+# fi
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#ssws$/a\### '"$user $exp"'\
 },{"password": "'""$uuid""'","method": "'""$cipher""'","email": "'""$user""'"' /etc/xray/config.json
@@ -274,29 +279,29 @@ END
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
 clear
-if [[ $1 && $2 ]]; then
-cat << EOF
-{
-    "status": "success",
-    "message": "account created successfully",
-    "data": {
-        "username": "${user}",
-        "hostname": "${domain}",
-        "port_tls": "${tls}",
-        "port_ntls": "${ntls}",
-        "port_grpc": "${tls}",
-        "uuid": "${uuid}",
-        "chipher": "${chipher}",
-        "path": "/ss-ws",
-        "servicename": "ss-grpc",
-        "link_tls": "${shadowsockslink}",
-        "link_ntls": "${shadowsockslink1}",
-        "link_grpc": "${shadowsockslink2}",
-        "exp": "${exp}"
-    }
-}
-EOF
-else
+# if [[ $1 && $2 ]]; then
+# cat << EOF
+# {
+#     "status": "success",
+#     "message": "account created successfully",
+#     "data": {
+#         "username": "${user}",
+#         "hostname": "${domain}",
+#         "port_tls": "${tls}",
+#         "port_ntls": "${ntls}",
+#         "port_grpc": "${tls}",
+#         "uuid": "${uuid}",
+#         "chipher": "${chipher}",
+#         "path": "/ss-ws",
+#         "servicename": "ss-grpc",
+#         "link_tls": "${shadowsockslink}",
+#         "link_ntls": "${shadowsockslink1}",
+#         "link_grpc": "${shadowsockslink2}",
+#         "exp": "${exp}"
+#     }
+# }
+# EOF
+# else
 cat > /home/vps/public_html/json/${user}-ssws.json << END
 {
     "status": "success",
@@ -319,5 +324,5 @@ cat > /home/vps/public_html/json/${user}-ssws.json << END
 }
 END
 echo -e "SUCCESS"
-fi
+# fi
 exit 0
