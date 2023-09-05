@@ -228,11 +228,10 @@ echo "   - VMess gRPC               : 443" | tee -a log-install.txt
 echo "   - VLess gRPC               : 443" | tee -a log-install.txt
 echo "   - Trojan gRPC              : 443" | tee -a log-install.txt
 echo "   - Shadowsocks gRPC         : 443" | tee -a log-install.txt
-echo ""l.txt
 echo "==================================================================" | tee -a log-install.txt
 echo -e ""
 echo ""
-echo "- by M AFDHAN" | tee -a log-install.txt
+echo "- by WORLDSSH / M AFDHAN" | tee -a log-install.txt
 rm /root/setup.sh >/dev/null 2>&1
 rm /root/ins-xray.sh >/dev/null 2>&1
 rm /root/insshws.sh >/dev/null 2>&1
