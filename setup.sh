@@ -1,18 +1,38 @@
 #!/bin/bash
-apt upgrade -y
-apt update -y
-apt install wget curl -y
 clear
 wget -O /usr/bin/acc "https://raw.githubusercontent.com/Afdhan/scp/main/menu/acc.sh" && chmod +x /usr/bin/acc
-red='\e[1;31m'
-green='\e[0;32m'
-yell='\e[1;33m'
-tyblue='\e[1;36m'
-BRed='\e[1;31m'
+cat > /root/.warna.conf << EOF
+DF='\e[39m'
+Bold='\e[1m'
+Blink='\e[5m'
+yell='\e[33m'
+red='\e[31m'
+green='\e[32m'
+blue='\e[34m'
+purple='\e[35m'
+cyan='\e[36m'
+Lred='\e[91m'
+Lgreen='\e[92m'
+Lyellow='\e[93m'
 BGreen='\e[1;32m'
 BYellow='\e[1;33m'
 BBlue='\e[1;34m'
+BPurple='\e[1;35m'
+BCyan='\e[1;36m'
+
 NC='\e[0m'
+RED='\033[0;31m'
+NCT='\033[0m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+LIGHT='\033[0;37m'
+MAGENTA='\033[0;35m'
+BGMAGENTA='\E[45;1;30m'
+EOF
+
 purple() { echo -e "\\033[35;1m${*}\\033[0m"; }
 tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
@@ -47,22 +67,6 @@ touch /etc/xray/domain
 touch /etc/v2ray/domain
 touch /etc/xray/scdomain
 touch /etc/v2ray/scdomain
-# mkdir /etc/kode_warna
-# cat < /etc/kode_warna/warna.conf << EOF
-# red='\e[1;31m'
-# green='\e[0;32m'
-# yell='\e[1;33m'
-# tyblue='\e[1;36m'
-# BRed='\e[1;31m'
-# BGreen='\e[1;32m'
-# BYellow='\e[1;33m'
-# BBlue='\e[1;34m'
-# NC='\e[0m'
-# EOF
-# echo -e "[ ${BBlue}NOTES${NC} ] Before we go.. "
-# sleep 0.5
-# echo -e "[ ${BBlue}NOTES${NC} ] I need check your headers first.."
-# sleep 0.5
 echo -e "[ ${BGreen}INFO${NC} ] Checking headers"
 sleep 0.5
 totet=`uname -r`
@@ -75,15 +79,9 @@ if [ "" = "$PKG_OK" ]; then
   echo "No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
   apt-get --yes install $REQUIRED_PKG
   sleep 0.5
-  echo ""
-  sleep 0.5
   echo -e "[ ${BBlue}NOTES${NC} ] If error you need.. to do this"
   sleep 0.5
-  echo ""
-  sleep 0.5
   echo -e "[ ${BBlue}NOTES${NC} ] apt update && apt upgrade -y && reboot"
-  sleep 0.5
-  echo ""
   sleep 0.5
   echo -e "[ ${BBlue}NOTES${NC} ] After this"
   sleep 0.5
@@ -124,8 +122,6 @@ sleep 2
 
 mkdir -p /var/lib/ >/dev/null 2>&1
 echo "IP=" >> /var/lib/ipvps.conf
-
-echo ""
 clear
 echo -e "$BBlue                     SETUP DOMAIN VPS     $NC"
 echo -e "$BYellow----------------------------------------------------------$NC"
@@ -134,7 +130,7 @@ echo -e "$BGreen 2. Choose Your Own Domain / Gunakan Domain Sendiri $NC"
 echo -e "$BYellow----------------------------------------------------------$NC"
 read -rp " input 1 or 2 / pilih 1 atau 2 : " dns
 if test $dns -eq 1; then
-wget https://raw.githubusercontent.com/Afdhan/scp/main/ssh/cf && sed -i -e 's/\r$//' cf && chmod +x cf && ./cf
+wget https://raw.githubusercontent.com/Afdhan/scp/main/ssh/cf && chmod +x cf && ./cf
 elif test $dns -eq 2; then
 read -rp "Enter Your Domain / masukan domain : " dom
 echo "IP=$dom" > /var/lib/ipvps.conf
@@ -168,7 +164,7 @@ fi
 
 mesg n || true
 clear
-menu
+neofetch
 END
 chmod 644 /root/.profile
 
@@ -215,9 +211,9 @@ echo "   - SSH SSL Websocket        : 443" | tee -a log-install.txt
 echo "   - Stunnel4                 : 222, 777" | tee -a log-install.txt
 echo "   - Dropbear                 : 109, 143" | tee -a log-install.txt
 echo "   - Badvpn                   : 7100-7900" | tee -a log-install.txt
-echo "   - Nginx                    : 81" | tee -a log-install.txt
-echo "   - Vmess WS TLS             : 443" | tee -a log-install.txt
-echo "   - Vless WS TLS             : 443" | tee -a log-install.txt
+echo "   - Squid                    : 81" | tee -a log-install.txt
+echo "   - VMess WS TLS             : 443" | tee -a log-install.txt
+echo "   - VLess WS TLS             : 443" | tee -a log-install.txt
 echo "   - Trojan WS TLS            : 443" | tee -a log-install.txt
 echo "   - Shadowsocks WS TLS       : 443" | tee -a log-install.txt
 echo "   - VMess WS none TLS        : 80" | tee -a log-install.txt
@@ -231,7 +227,7 @@ echo "   - Shadowsocks gRPC         : 443" | tee -a log-install.txt
 echo "==================================================================" | tee -a log-install.txt
 echo -e ""
 echo ""
-echo "- by WORLDSSH / M AFDHAN" | tee -a log-install.txt
+echo "- by M AFDHAN" | tee -a log-install.txt
 rm /root/setup.sh >/dev/null 2>&1
 rm /root/ins-xray.sh >/dev/null 2>&1
 rm /root/insshws.sh >/dev/null 2>&1
@@ -240,5 +236,5 @@ echo -e ""
 echo " Auto reboot in 10 Seconds "
 sleep 10
 rm -f setup.sh
-# reboot
+reboot
 
