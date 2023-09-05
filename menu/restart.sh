@@ -11,13 +11,13 @@ echo -e " ${green}1${NCT} Restart All Services"
 echo -e " ${green}2${NCT} Restart OpenSSH"
 echo -e " ${green}3${NCT} Restart Dropbear"
 echo -e " ${green}4${NCT} Restart Stunnel4"
-echo -e " ${green}5${NCT} Restart OpenVPN"
+echo -e " ${green}5${NCT} Restart OpenVPN (off)"
 echo -e " ${green}6${NCT} Restart Squid"
 echo -e " ${green}7${NCT} Restart Nginx"
 echo -e " ${green}8${NCT} Restart Badvpn"
 echo -e " ${green}9${NCT} Restart XRAY"
 echo -e " ${green}10${NCT} Restart WEBSOCKET"
-echo -e " ${green}11${NCT} Restart Trojan Go"
+echo -e " ${green}11${NCT} Restart Trojan Go (off)"
 echo -e ""
 echo -e " ${red}0${NCT} BACK TO MENU"
 echo -e   ""
@@ -41,7 +41,7 @@ echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━
                 /etc/init.d/ssh restart
                 /etc/init.d/dropbear restart
                 /etc/init.d/stunnel4 restart
-                /etc/init.d/openvpn restart
+                # /etc/init.d/openvpn restart
                 /etc/init.d/fail2ban restart
                 /etc/init.d/cron restart
                 /etc/init.d/nginx restart
@@ -61,10 +61,6 @@ echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━
                 systemctl restart sshws.service
                 systemctl restart ws-dropbear.service
                 systemctl restart ws-stunnel.service
-                sleep 0.5
-                echo -e "[ \033[32mok${NCT} ] Restarting Trojan Go Service (via systemctl) "
-                sleep 0.5
-                systemctl restart trojan-go.service 
                 sleep 0.5
                 echo -e "[ \033[32mInfo${NCT} ] ALL Service Restarted"
                 echo ""

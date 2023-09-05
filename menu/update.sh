@@ -44,7 +44,6 @@ wget -O restart "https://raw.githubusercontent.com/Afdhan/scp/main/menu/restart.
 wget -O bw "https://raw.githubusercontent.com/Afdhan/scp/main/menu/bw.sh"
 wget -O m-tcp "https://raw.githubusercontent.com/Afdhan/scp/main/menu/tcp.sh"
 wget -O xp "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/xp.sh"
-# wget -O sshws "https://raw.githubusercontent.com/Afdhan/scp/main/ssh/sshws.sh"
 wget -O m-dns "https://raw.githubusercontent.com/Afdhan/scp/main/menu/m-dns.sh"
 
 chmod +x menu
