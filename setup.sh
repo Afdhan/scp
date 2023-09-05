@@ -130,7 +130,7 @@ echo -e "$BGreen 2. Choose Your Own Domain / Gunakan Domain Sendiri $NC"
 echo -e "$BYellow----------------------------------------------------------$NC"
 read -rp " input 1 or 2 / pilih 1 atau 2 : " dns
 if test $dns -eq 1; then
-wget https://raw.githubusercontent.com/Afdhan/scp/main/ssh/cf && chmod +x cf && ./cf
+wget https://raw.githubusercontent.com/Afdhan/scp/main/ssh/cf && chmod +x cf && sed -i -e 's/\r$//' cf && ./cf
 elif test $dns -eq 2; then
 read -rp "Enter Your Domain / masukan domain : " dom
 echo "IP=$dom" > /var/lib/ipvps.conf
@@ -211,7 +211,7 @@ echo "   - SSH SSL Websocket        : 443" | tee -a log-install.txt
 echo "   - Stunnel4                 : 222, 777" | tee -a log-install.txt
 echo "   - Dropbear                 : 109, 143" | tee -a log-install.txt
 echo "   - Badvpn                   : 7100-7900" | tee -a log-install.txt
-echo "   - Squid                    : 81" | tee -a log-install.txt
+echo "   - Nginx                    : 81" | tee -a log-install.txt
 echo "   - VMess WS TLS             : 443" | tee -a log-install.txt
 echo "   - VLess WS TLS             : 443" | tee -a log-install.txt
 echo "   - Trojan WS TLS            : 443" | tee -a log-install.txt
