@@ -22,7 +22,16 @@ grep -E "^#& " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | 
 echo -e ""
 echo -e "  • [NOTE] Press any key to back on menu"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NCT}";
+if [[ $# -gt 0 ]]; then
+while getopts u: flag
+        do
+            case "${flag}" in
+                u) user=${OPTARG};;
+            esac
+        done
+        else
 read -rp "   Input Username : " user
+fi
 if [ -z $user ]; then
 m-vless
 else
